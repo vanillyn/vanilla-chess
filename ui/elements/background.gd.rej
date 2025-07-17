@@ -1,0 +1,22 @@
+--- /dev/null
++++ /dev/null
+@@ -118,9 +121,19 @@
+ 	queue_redraw()
+ 
+ func _process(delta):
++	hover_strength = lerp(hover_strength, 1.0 if hover_pos else 0.0, delta * 10.0)
++	animation_speed += speed_boost
++	speed_boost = lerp(speed_boost, 0.0, delta * 2.0)
+ 	current_time += delta * animation_speed
+ 	queue_redraw()
+ 
++func _input(event):
++	if event is InputEventMouseMotion:
++		hover_pos = event.position
++	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
++		speed_boost = 1.0
++	elif event is InputEventMouseButton and not event.pressed:
++		hover_pos = null
+ 
+ func _draw():
+ 	var size = get_viewport_rect().size

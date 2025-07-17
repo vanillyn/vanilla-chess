@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddpuipxob50nt"]
+
+[ext_resource type="Texture2D" uid="uid://dfi16jkbf2ye8" path="res://assets/vanilla/ui/elements/infobox/genericplayer.png" id="1_0bjjo"]
+[ext_resource type="FontFile" uid="uid://ek7qfnf8vner" path="res://assets/vanilla/fonts/Zacchary Dempsey -Plante - Pixellari.ttf" id="2_h4u4g"]
+[ext_resource type="FontFile" uid="uid://da8eks08w5vah" path="res://assets/vanilla/fonts/Roberto Mocci - Dogica.ttf" id="3_8kl4c"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_1d6sa"]
+font = ExtResource("3_8kl4c")
+font_size = 12
+font_color = Color(0.78171, 0.776193, 0.877211, 1)
+shadow_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_3cd6t"]
+font = ExtResource("2_h4u4g")
+font_size = 24
+shadow_size = 0
+
+[node name="Infobox" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+layout_mode = 1
+offset_left = 1.0
+offset_top = 20.0
+offset_right = 193.0
+offset_bottom = 71.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 8
+size_flags_vertical = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Rating" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 16
+text = "4000"
+label_settings = SubResource("LabelSettings_1d6sa")
+
+[node name="Username" type="Label" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 16
+text = "username"
+label_settings = SubResource("LabelSettings_3cd6t")
+
+[node name="FriendsOnline" type="Label" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 16
+text = "x friends online"
+label_settings = SubResource("LabelSettings_1d6sa")
+
+[node name="Genericplayer" type="Sprite2D" parent="PanelContainer"]
+position = Vector2(20, 28)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("1_0bjjo")

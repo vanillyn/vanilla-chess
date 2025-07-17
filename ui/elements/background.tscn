@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cu0608env66lr"]
+
+[ext_resource type="Script" uid="uid://1ccsf63qfltw" path="res://ui/elements/background.gd" id="1_s0ay4"]
+
+[node name="Background" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_s0ay4")

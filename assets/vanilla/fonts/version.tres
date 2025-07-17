@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://b7ntqdhicx5fe"]
+
+[ext_resource type="FontFile" uid="uid://dkquy672jtsrj" path="res://assets/vanilla/fonts/OmegaPC777 - Pixeled.ttf" id="1_2ebw5"]
+
+[resource]
+font = ExtResource("1_2ebw5")
+font_size = 7
+shadow_size = 0
+shadow_color = Color(0, 0, 0, 0.913725)

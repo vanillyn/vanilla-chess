@@ -1,0 +1,42 @@
+--- original.gd
++++ modified.gd
+@@ -22,6 +22,9 @@
+ @export var config_file_path := "user://background_themes.json"
+ 
+ var current_time := 0.0
++var hover_pos := null
++var hover_strength := 0.0
++var speed_boost := 0.0
+ var gradient_colors := []
+ var current_background_id := "default"
+ var is_error_state := false
+@@ -115,9 +118,19 @@
+ 	queue_redraw()
+ 
+ func _process(delta):
++	hover_strength = lerp(hover_strength, 1.0 if hover_pos else 0.0, delta * 10.0)
++	animation_speed += speed_boost
++	speed_boost = lerp(speed_boost, 0.0, delta * 2.0)
+ 	current_time += delta * animation_speed
+ 	queue_redraw()
+ 
++func _input(event):
++	if event is InputEventMouseMotion:
++		hover_pos = event.position
++	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
++		speed_boost = 1.0
++	elif event is InputEventMouseButton and not event.pressed:
++		hover_pos = null
+
+ func _draw():
+ 	var size = get_viewport_rect().size
+ 	if is_error_state:
+@@ -145,6 +158,8 @@
+ 			var color = gradient.sample(clamp(gpos + noise, 0, 1))
+ 			var d = mouse.distance_to(pos + Vector2(pixel_size * 0.5, pixel_size * 0.5))
+ 			color = color.lerp(Color.WHITE, clamp(1.0 - d / 50.0, 0.0, 0.3))
++			var d = mouse.distance_to(pos + Vector2(pixel_size * 0.5, pixel_size * 0.5))
++			color = color.lerp(Color.WHITE, clamp(1.0 - d / 40.0, 0.0, 0.4 * hover_strength))
+ 			draw_rect(rect, color)
+ 
+ func _draw_error(size: Vector2):

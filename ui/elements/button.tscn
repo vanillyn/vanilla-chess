@@ -1,0 +1,59 @@
+[gd_scene load_steps=3 format=3 uid="uid://b56gpae3it65p"]
+
+[ext_resource type="Script" uid="uid://bsjh4d3jdko72" path="res://ui/elements/button.gd" id="1_amxqd"]
+[ext_resource type="Resource" uid="uid://bfvp2u0k3q6gr" path="res://assets/vanilla/ui/elements/button/standard_button.tres" id="2_mti5d"]
+
+[node name="Button" type="Control"]
+layout_mode = 3
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.564
+anchor_bottom = 0.614
+offset_right = -73.728
+offset_bottom = -73.872
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_amxqd")
+text = " meow"
+style_resource = ExtResource("2_mti5d")
+
+[node name="Shadow" type="NinePatchRect" parent="."]
+modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="Background" type="NinePatchRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+patch_margin_left = 7
+patch_margin_top = 7
+patch_margin_right = 7
+patch_margin_bottom = 7
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -27.0
+offset_top = -23.0
+offset_right = 27.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Button"
+horizontal_alignment = 1
+vertical_alignment = 1

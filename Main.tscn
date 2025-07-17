@@ -1,0 +1,44 @@
+[gd_scene load_steps=4 format=3 uid="uid://cl6nnhwge5qs4"]
+
+[ext_resource type="Script" uid="uid://cyt57yxw26cmx" path="res://ui/scene.gd" id="1_uu6xs"]
+[ext_resource type="Script" uid="uid://1ccsf63qfltw" path="res://ui/elements/background.gd" id="2_r0du0"]
+[ext_resource type="LabelSettings" uid="uid://b7ntqdhicx5fe" path="res://assets/vanilla/fonts/version.tres" id="3_r0du0"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_uu6xs")
+metadata/_custom_type_script = "uid://cyt57yxw26cmx"
+
+[node name="Version" type="Label" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 2.0
+offset_top = 697.0
+offset_right = 147.0
+offset_bottom = 718.0
+grow_vertical = 0
+text = "ver x.x.x:vanilla/chess"
+label_settings = ExtResource("3_r0du0")
+vertical_alignment = 2
+uppercase = true
+
+[node name="Background" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_r0du0")
+default_gradient_colors = [Color(0, 0, 0, 1), Color(0, 0, 0, 1), Color(0, 0, 0, 1)]
+animation_speed = 0.01
+pixel_size = 20
+noise_intensity = 0.115
+transition_duration = 0.97
+metadata/_custom_type_script = "uid://1ccsf63qfltw"
+
+[node name="Content" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0

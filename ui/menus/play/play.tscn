@@ -1,0 +1,78 @@
+[gd_scene load_steps=6 format=3 uid="uid://bu1ai8cmdbb5a"]
+
+[ext_resource type="PackedScene" uid="uid://ddpuipxob50nt" path="res://ui/menus/elements/infobox.tscn" id="1_1d2so"]
+[ext_resource type="PackedScene" uid="uid://b56gpae3it65p" path="res://ui/elements/button.tscn" id="2_1d2so"]
+[ext_resource type="Resource" uid="uid://bonehhml6icx4" path="res://assets/vanilla/ui/elements/button/large_button.tres" id="3_ukqfn"]
+[ext_resource type="Texture2D" uid="uid://ddqs2e2nh7737" path="res://assets/vanilla/ui/elements/button/details/pawn.png" id="4_7hndm"]
+[ext_resource type="Texture2D" uid="uid://dyq5unuh1ut4t" path="res://assets/vanilla/ui/elements/button/details/shogi_piece.png" id="5_6vebh"]
+
+[node name="Play" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Infobox" parent="." instance=ExtResource("1_1d2so")]
+
+[node name="ChessButton" parent="." instance=ExtResource("2_1d2so")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 43.0
+offset_top = 146.0
+offset_right = 454.0
+offset_bottom = 313.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "CHESS"
+font_size = 124
+style_resource = ExtResource("3_ukqfn")
+
+[node name="Pawn" type="Sprite2D" parent="ChessButton"]
+position = Vector2(317, 66)
+scale = Vector2(0.757874, 0.757874)
+texture = ExtResource("4_7hndm")
+
+[node name="ShogiButton" parent="." instance=ExtResource("2_1d2so")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 37.0
+offset_top = 353.0
+offset_right = 318.0
+offset_bottom = 464.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "SHOGI"
+font_size = 64
+style_resource = ExtResource("3_ukqfn")
+
+[node name="ShogiPiece" type="Sprite2D" parent="ShogiButton"]
+position = Vector2(214, 52)
+scale = Vector2(0.767717, 0.767717)
+texture = ExtResource("5_6vebh")
+
+[node name="Button3" parent="." instance=ExtResource("2_1d2so")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 37.0
+offset_top = 533.0
+offset_right = 244.0
+offset_bottom = 596.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "OTHER"
+font_size = 30
+style_resource = ExtResource("3_ukqfn")

@@ -1,0 +1,203 @@
+[gd_scene load_steps=10 format=3 uid="uid://b4270w2qo058p"]
+
+[ext_resource type="PackedScene" uid="uid://ddpuipxob50nt" path="res://ui/menus/elements/infobox.tscn" id="1_1d6sa"]
+[ext_resource type="Script" uid="uid://djugtiiddhf2d" path="res://ui/menus/startmenu.gd" id="1_2p8e5"]
+[ext_resource type="PackedScene" uid="uid://b56gpae3it65p" path="res://ui/elements/button.tscn" id="2_k6fnj"]
+[ext_resource type="Resource" uid="uid://bonehhml6icx4" path="res://assets/vanilla/ui/elements/button/large_button.tres" id="3_m8csn"]
+[ext_resource type="Texture2D" uid="uid://bdu1tnk7anfwh" path="res://assets/vanilla/logo/vChessLogoStandard.png" id="4_gli22"]
+[ext_resource type="Texture2D" uid="uid://brf5wylv2by1w" path="res://assets/vanilla/ui/elements/button/details/pawnL.png" id="5_1d6sa"]
+[ext_resource type="Texture2D" uid="uid://b84h6ae5luxvr" path="res://assets/vanilla/ui/elements/button/details/pawnR.png" id="6_2p8e5"]
+[ext_resource type="LabelSettings" uid="uid://7ytyi033i5i5" path="res://assets/vanilla/fonts/subtext.tres" id="7_2p8e5"]
+[ext_resource type="Texture2D" uid="uid://c1gw4iaa351l1" path="res://assets/vanilla/ui/elements/button/details/friends_detail.png" id="8_onp37"]
+
+[node name="Menu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_2p8e5")
+metadata/_custom_type_script = "uid://cyt57yxw26cmx"
+
+[node name="Infobox" parent="." instance=ExtResource("1_1d6sa")]
+
+[node name="PlayButton" parent="." instance=ExtResource("2_k6fnj")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 664.0
+offset_top = 41.0
+offset_right = 1203.0
+offset_bottom = 239.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "PLAY"
+font_size = 124
+press_scale = 1.0
+style_resource = ExtResource("3_m8csn")
+
+[node name="DetailL" type="TextureRect" parent="PlayButton"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -86.0
+offset_top = -76.0
+offset_right = 173.0
+offset_bottom = 117.0
+grow_vertical = 2
+texture = ExtResource("5_1d6sa")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="DetailR" type="TextureRect" parent="PlayButton"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -124.0
+offset_top = -90.0
+offset_right = 73.0
+offset_bottom = 94.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("6_2p8e5")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Server" type="Label" parent="PlayButton"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -61.5
+offset_top = -146.0
+offset_right = 78.5
+offset_bottom = -129.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.8)
+theme_override_constants/shadow_offset_x = 1
+theme_override_constants/shadow_offset_y = 1
+theme_override_font_sizes/font_size = 12
+text = "server: localhost"
+label_settings = ExtResource("7_2p8e5")
+horizontal_alignment = 1
+
+[node name="CustomizeButton" parent="." instance=ExtResource("2_k6fnj")]
+visible = false
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 918.0
+offset_top = 363.0
+offset_right = 1218.0
+offset_bottom = 433.0
+text = "CUSTOMIZE"
+font_size = 46
+style_resource = ExtResource("3_m8csn")
+
+[node name="FriendsButton" parent="." instance=ExtResource("2_k6fnj")]
+custom_minimum_size = Vector2(300, 70)
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 902.0
+offset_top = 271.0
+offset_right = 1202.0
+offset_bottom = 343.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "FRIENDS"
+font_size = 46
+style_resource = ExtResource("3_m8csn")
+
+[node name="Details" type="TextureRect" parent="FriendsButton"]
+layout_mode = 1
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_left = -1.0
+offset_top = -49.0
+offset_right = 108.0
+offset_bottom = 36.0
+grow_vertical = 2
+texture = ExtResource("8_onp37")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SecondaryButtons" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 929.0
+offset_top = 552.0
+offset_right = 1246.0
+offset_bottom = 592.0
+alignment = 1
+
+[node name="ToolsButton" parent="SecondaryButtons" instance=ExtResource("2_k6fnj")]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "TOOLS"
+button_style = 1
+
+[node name="SettingsButton" parent="SecondaryButtons" instance=ExtResource("2_k6fnj")]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "SETTINGS"
+button_style = 1
+
+[node name="QuitButton" parent="." instance=ExtResource("2_k6fnj")]
+layout_mode = 0
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 984.0
+offset_top = 609.0
+offset_right = 1199.0
+offset_bottom = 645.0
+grow_horizontal = 1
+grow_vertical = 1
+text = "QUIT VANILLA CHESS"
+button_style = 1
+
+[node name="Logo" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -200.0
+offset_right = 430.0
+offset_bottom = -30.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="LogoTexture" type="TextureRect" parent="Logo"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_gli22")
+expand_mode = 1
+stretch_mode = 4

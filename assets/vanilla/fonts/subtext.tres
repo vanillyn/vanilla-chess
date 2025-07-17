@@ -1,0 +1,9 @@
+[gd_resource type="LabelSettings" load_steps=2 format=3 uid="uid://7ytyi033i5i5"]
+
+[ext_resource type="FontFile" uid="uid://da8eks08w5vah" path="res://assets/vanilla/fonts/Roberto Mocci - Dogica.ttf" id="1_6g83j"]
+
+[resource]
+font = ExtResource("1_6g83j")
+font_size = 12
+font_color = Color(0.05112, 0.0468, 0.09, 1)
+shadow_size = 0

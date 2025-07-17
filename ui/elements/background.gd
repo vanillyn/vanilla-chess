@@ -1,0 +1,237 @@
+class_name AnimatedBackground
+extends Control
+
+@export var default_gradient_colors := [
+	Color(0.2, 0.3, 0.8),
+	Color(0.4, 0.2, 0.6),
+	Color(0.6, 0.3, 0.4),
+	Color(0.3, 0.5, 0.7)
+]
+@export var bg_fallback := [
+	Color.RED,
+	Color.BLACK,
+	Color.DARK_RED,
+	Color(0.3, 0.0, 0.0)
+]
+@export var animation_speed := 0.02
+@export var gradient_angle := 45.0
+@export var pixel_size := 36
+@export var noise_intensity := 0.1
+@export var transition_duration := 0.5
+@export var transition_type := Tween.TRANS_CUBIC
+@export var config_file_path := "user://background_themes.json"
+
+var current_time := 0.0
+var gradient_colors := []
+var current_background_id := "default"
+var is_error_state := false
+var error_message := ""
+var background_configs := {}
+var noise_texture: NoiseTexture2D
+var tween: Tween
+
+var transition_start_colors := []
+var transition_target_colors := []
+var transition_start_angle := 0.0
+var transition_target_angle := 0.0
+var is_transitioning := false
+
+func _ready():
+	gradient_colors = default_gradient_colors.duplicate()
+	_create_noise()
+	_setup_configs()
+	set_process(true)
+
+func _create_noise():
+	var noise = FastNoiseLite.new()
+	noise.noise_type = FastNoiseLite.TYPE_PERLIN
+	noise.frequency = 0.1
+	noise.fractal_octaves = 3
+	noise_texture = NoiseTexture2D.new()
+	noise_texture.noise = noise
+	noise_texture.width = 512
+	noise_texture.height = 512
+
+func _setup_configs():
+	background_configs["default"] = {
+		"colors": default_gradient_colors,
+		"speed": 0.02,
+		"angle": 45.0
+	}
+	background_configs["error"] = {
+		"colors": bg_fallback,
+		"speed": 0.15,
+		"angle": 180
+	}
+	if not _load_config_from_file():
+		_enter_error_state("could not load config: " + config_file_path)
+
+func _load_config_from_file() -> bool:
+	if not FileAccess.file_exists(config_file_path):
+		return false
+	var file = FileAccess.open(config_file_path, FileAccess.READ)
+	if not file:
+		return false
+	var text = file.get_as_text()
+	file.close()
+	if text.strip_edges().is_empty():
+		return false
+	var json = JSON.new()
+	var result = json.parse(text)
+	if result != OK:
+		return false
+	var data = json.data
+	if typeof(data) != TYPE_DICTIONARY or not data.has("background_configs"):
+		return false
+	return _convert_json_to_configs(data["background_configs"])
+
+func _convert_json_to_configs(json_configs: Dictionary) -> bool:
+	var loaded = 0
+	for id in json_configs:
+		var c = json_configs[id]
+		if typeof(c) != TYPE_DICTIONARY or not (c.has("colors") and c.has("speed") and c.has("angle")):
+			continue
+		var colors := []
+		for color in c["colors"]:
+			if typeof(color) == TYPE_ARRAY and color.size() >= 3:
+				colors.append(Color(color[0], color[1], color[2]))
+		if colors.size() == 0:
+			continue
+		background_configs[id] = {
+			"colors": colors,
+			"speed": float(c["speed"]),
+			"angle": float(c["angle"])
+		}
+		loaded += 1
+	return loaded > 0
+
+func _enter_error_state(msg: String):
+	is_error_state = true
+	error_message = msg
+	gradient_colors = bg_fallback.duplicate()
+	animation_speed = 0.05
+	gradient_angle = 0.0
+	current_background_id = "error"
+	queue_redraw()
+
+func _process(delta):
+	current_time += delta * animation_speed
+	queue_redraw()
+
+func _draw():
+	var size = get_viewport_rect().size
+	if is_error_state:
+		_draw_error(size)
+	var angle = deg_to_rad(gradient_angle)
+	var dir = Vector2(cos(angle), sin(angle))
+	var gradient = Gradient.new()
+	for i in gradient_colors.size():
+		var t = float(i) / max(1, gradient_colors.size() - 1)
+		var c = gradient_colors[i]
+		var b = sin(current_time * 2 + i) * 0.08
+		gradient.add_point(t, c.lightened(b))
+	_draw_gradient(size, gradient, dir)
+
+func _draw_gradient(size: Vector2, gradient: Gradient, dir: Vector2):
+	var cols = int(size.x / pixel_size) + 1
+	var rows = int(size.y / pixel_size) + 1
+	var mouse = get_local_mouse_position()
+	for y in rows:
+		for x in cols:
+			var pos = Vector2(x * pixel_size, y * pixel_size)
+			var rect = Rect2(pos, Vector2(pixel_size, pixel_size))
+			var gpos = fposmod(pos.dot(dir) + current_time * 200.0, size.length()) / size.length()
+			var noise = noise_texture.noise.get_noise_2d(x + current_time * 10, y + current_time * 10) * noise_intensity
+			var color = gradient.sample(clamp(gpos + noise, 0, 1))
+			var d = mouse.distance_to(pos + Vector2(pixel_size * 0.5, pixel_size * 0.5))
+			color = color.lerp(Color.WHITE, clamp(1.0 - d / 50.0, 0.0, 0.3))
+			draw_rect(rect, color)
+
+func _draw_error(size: Vector2):
+	var font = ThemeDB.fallback_font
+	var fs = 24
+	draw_rect(Rect2(Vector2.ZERO, size), Color(0, 0, 0, 0.7))
+	var lines = [
+		"BACKGROUND CONFIG ERROR", "", error_message, "",
+		"check config:", config_file_path
+	]
+	var y = (size.y - lines.size() * (fs + 4)) / 2
+	for i in lines.size():
+		if lines[i] == "":
+			continue
+		var w = font.get_string_size(lines[i], HORIZONTAL_ALIGNMENT_LEFT, -1, fs).x
+		var x = (size.x - w) / 2
+		var color = i == 0 and Color.RED or Color.WHITE
+		draw_string(font, Vector2(x, y + i * (fs + 4)), lines[i], HORIZONTAL_ALIGNMENT_LEFT, -1, fs, color)
+
+func transition_to_background(id: String):
+	if id == current_background_id:
+		return
+	if not background_configs.has(id):
+		_enter_error_state("missing background: " + id)
+		return
+	current_background_id = id
+	is_transitioning = true
+	if id != "error":
+		is_error_state = false
+		error_message = ""
+	var config = background_configs[id]
+	transition_start_colors = gradient_colors.duplicate()
+	transition_target_colors = config["colors"]
+	transition_start_angle = gradient_angle
+	transition_target_angle = config["angle"]
+	if tween:
+		tween.kill()
+	tween = create_tween().set_parallel(true)
+	tween.tween_method(_interpolate_transition, 0.0, 1.0, transition_duration).set_trans(transition_type)
+	tween.tween_property(self, "animation_speed", config["speed"], transition_duration).set_trans(transition_type)
+	tween.tween_callback(_finish_transition).set_delay(transition_duration)
+
+func _interpolate_transition(progress: float):
+	gradient_colors.clear()
+	var n = max(transition_start_colors.size(), transition_target_colors.size())
+	for i in n:
+		var a = transition_start_colors[i % transition_start_colors.size()]
+		var b = transition_target_colors[i % transition_target_colors.size()]
+		gradient_colors.append(a.lerp(b, progress))
+	var diff = transition_target_angle - transition_start_angle
+	if abs(diff) > 180:
+		diff += (diff > 0) and -360 or 360
+	gradient_angle = transition_start_angle + diff * progress
+
+func _finish_transition():
+	is_transitioning = false
+
+func reload_config():
+	is_error_state = false
+	error_message = ""
+	_setup_configs()
+	if not background_configs.has(current_background_id) or current_background_id == "error":
+		transition_to_background("default")
+
+func get_current_background_id() -> String:
+	return current_background_id
+
+func get_error_message() -> String:
+	return error_message
+
+func is_in_error_state() -> bool:
+	return is_error_state
+
+func set_config_file_path(path: String):
+	config_file_path = path
+	reload_config()
+
+func get_available_backgrounds() -> Array:
+	return background_configs.keys()
+
+func has_background(id: String) -> bool:
+	return background_configs.has(id)
+
+func set_pixel_size(s: int):
+	pixel_size = s
+	queue_redraw()
+
+func set_noise_intensity(n: float):
+	noise_intensity = n
+	queue_redraw()
