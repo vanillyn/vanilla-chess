@@ -51,7 +51,8 @@ func start_loading():
 	loading_complete.emit()
 
 func load_all_scenes():
-	scene_manager._load_game()
+	#scene_manager._load_game()
+	
 	await get_tree().process_frame
 	
 	print("All scenes loaded!")
