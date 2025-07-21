@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://pcqsgbotp2py"]
+
+[ext_resource type="PackedScene" uid="uid://b56gpae3it65p" path="res://ui/elements/button.tscn" id="1_h8v1o"]
+[ext_resource type="Resource" uid="uid://bonehhml6icx4" path="res://assets/vanilla/ui/elements/button/large_button.tres" id="2_asag2"]
+
+[node name="Chess" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Online" parent="." instance=ExtResource("1_h8v1o")]
+layout_mode = 1
+offset_left = -600.0
+offset_top = -209.0
+offset_right = -237.92
+offset_bottom = -127.08
+text = "ONLINE"
+font_size = 82
+style_resource = ExtResource("2_asag2")
+
+[node name="Local" parent="." instance=ExtResource("1_h8v1o")]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 40.0
+offset_top = 334.0
+offset_right = 261.0
+offset_bottom = 435.0
+text = "LOCAL"
+font_size = 48
+style_resource = ExtResource("2_asag2")
+
+[node name="vscpu" parent="." instance=ExtResource("1_h8v1o")]
+layout_mode = 2
+anchors_preset = 0
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_left = 291.0
+offset_top = 334.0
+offset_right = 474.0
+offset_bottom = 435.0
+text = "BOTS"
+font_size = 48
+style_resource = ExtResource("2_asag2")
+
+[node name="SecondaryButtons" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 40.0
+offset_top = 522.0
+offset_right = 357.0
+offset_bottom = 562.0
+
+[node name="BackButton" parent="SecondaryButtons" instance=ExtResource("1_h8v1o")]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "BACK"
+button_style = 1
+
+[node name="SettingsButton" parent="SecondaryButtons" instance=ExtResource("1_h8v1o")]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+size_flags_horizontal = 8
+text = "SETTINGS"
+button_style = 1
